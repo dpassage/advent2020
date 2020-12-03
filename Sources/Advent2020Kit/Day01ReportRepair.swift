@@ -7,10 +7,16 @@
 
 import Foundation
 
-func day01part1() {
+public func day01part1() {
+    var inputs: [Int] = []
+    while let line = readLine(),
+          let value = Int(line) {
+        inputs.append(value)
+    }
 
+    let result = reportRepair(inputs: inputs, targetSum: 2020)
+    print(result)
 }
-
 
 func reportRepair(inputs: [Int], targetSum: Int) -> Int {
     let sortedInputs = inputs.sorted()
@@ -19,13 +25,14 @@ func reportRepair(inputs: [Int], targetSum: Int) -> Int {
     var high = sortedInputs.index(before: sortedInputs.endIndex)
 
     while low < high {
-        let sum = inputs[low] + inputs[high]
+        let sum = sortedInputs[low] + sortedInputs[high]
+        print("values: low \(sortedInputs[low]) high \(sortedInputs[high]) sum \(sum)")
         if sum == targetSum {
-            return inputs[low] * inputs[high]
+            return sortedInputs[low] * sortedInputs[high]
         } else if sum < targetSum {
-            inputs.formIndex(after: &low)
+            sortedInputs.formIndex(after: &low)
         } else { // sum > targetSum
-            inputs.formIndex(before: &high)
+            sortedInputs.formIndex(before: &high)
         }
     }
 
