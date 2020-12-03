@@ -15,6 +15,8 @@ case "day01part2":
     day01part2()
 case "day02part1":
     day02part1()
+case "day02part2":
+    day02part2()
 default:
     print("Unknown command")
     exit(1)

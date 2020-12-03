@@ -17,6 +17,14 @@ public func day02part1() {
     print(result)
 }
 
+// 729 was correct!
+public func day02part2() {
+    let inputs = readLines()
+    let passwordLines = inputs.compactMap(PasswordLine.init)
+    let result = passwordLines.filter { $0.isDay2Valid }.count
+    print(result)
+}
+
 func readLines() -> [String] {
     var result: [String] = []
     while let line = readLine() {
@@ -28,7 +36,8 @@ func readLines() -> [String] {
 struct PasswordLine {
     var password: String
     var character: Character
-    var range: ClosedRange<Int>
+    var low: Int
+    var high: Int
     init?(_ string: String) {
         let pattern = #"(\d+)-(\d+) ([a-z]): ([a-z]+)"#
         let regex = try! Regex(pattern: pattern)
@@ -37,14 +46,21 @@ struct PasswordLine {
             print("failed to parse \(string)!")
             return nil
         }
-        range = ClosedRange(uncheckedBounds: (Int(matches[0])!, Int(matches[1])!))
+        low = Int(matches[0])!
+        high = Int(matches[1])!
         character = matches[2].first!
         password = matches[3]
-
     }
 
     var isValid: Bool {
         let count = password.filter { $0 == character }.count
-        return range.contains(count)
+        return (low <= count) && (high >= count)
+    }
+
+    var isDay2Valid: Bool {
+        let characters = [Character](password)
+        let lowMatches = characters[low - 1] == character
+        let highMatches = characters[high - 1] == character
+        return lowMatches != highMatches
     }
 }
