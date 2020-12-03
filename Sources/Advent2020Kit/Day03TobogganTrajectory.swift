@@ -16,6 +16,14 @@ public func day03part1() {
     print(trees)
 }
 
+// 3093068400 was correct!
+public func day03part2() {
+    let inputs = readLines()
+    let map = TobogganMap(lines: inputs)
+    let trees = map.traverseMany()
+    print(trees)
+}
+
 struct TobogganMap {
     var grid: Rect<Bool>
 
@@ -45,5 +53,27 @@ struct TobogganMap {
             current.y += down
         }
         return trees
+    }
+
+    func traverseMany() -> Int {
+        /*
+         Right 1, down 1.
+         Right 3, down 1. (This is the slope you already checked.)
+         Right 5, down 1.
+         Right 7, down 1.
+         Right 1, down 2.
+         */
+
+        let slopes: [(Int, Int)] = [
+            (1, 1),
+            (3, 1),
+            (5, 1),
+            (7, 1),
+            (1, 2)
+        ]
+
+        let trees = slopes.map(traverse)
+        let result = trees.reduce(1, *)
+        return result
     }
 }
