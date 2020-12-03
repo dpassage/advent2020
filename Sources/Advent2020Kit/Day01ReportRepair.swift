@@ -8,32 +8,56 @@
 import Foundation
 
 public func day01part1() {
-    var inputs: [Int] = []
-    while let line = readLine(),
-          let value = Int(line) {
-        inputs.append(value)
-    }
+    let inputs = readInts().sorted()
 
     let result = reportRepair(inputs: inputs, targetSum: 2020)
     print(result)
 }
 
-func reportRepair(inputs: [Int], targetSum: Int) -> Int {
-    let sortedInputs = inputs.sorted()
+public func day01part2() {
+    let inputs = readInts().sorted()
+    let result = repair3(inputs: inputs, targetSum: 2020)
+    print(result)
+}
 
-    var low = sortedInputs.startIndex
-    var high = sortedInputs.index(before: sortedInputs.endIndex)
+func readInts() -> [Int] {
+    var inputs: [Int] = []
+    while let line = readLine(),
+          let value = Int(line) {
+        inputs.append(value)
+    }
+    return inputs
+}
+
+func reportRepair(inputs: [Int], targetSum: Int) -> Int {
+    var low = inputs.startIndex
+    var high = inputs.index(before: inputs.endIndex)
 
     while low < high {
-        let sum = sortedInputs[low] + sortedInputs[high]
-        print("values: low \(sortedInputs[low]) high \(sortedInputs[high]) sum \(sum)")
+        let sum = inputs[low] + inputs[high]
+        print("values: low \(inputs[low]) high \(inputs[high]) sum \(sum)")
         if sum == targetSum {
-            return sortedInputs[low] * sortedInputs[high]
+            return inputs[low] * inputs[high]
         } else if sum < targetSum {
-            sortedInputs.formIndex(after: &low)
+            inputs.formIndex(after: &low)
         } else { // sum > targetSum
-            sortedInputs.formIndex(before: &high)
+            inputs.formIndex(before: &high)
         }
+    }
+
+    return -1
+}
+
+func repair3(inputs: [Int], targetSum: Int) -> Int {
+    var inputs = inputs
+    while let lastNumber = inputs.popLast() {
+        print("lastNumber \(lastNumber) remaining \(inputs)")
+        let remaining = targetSum - lastNumber
+        guard remaining > 0 else { continue }
+
+        let inner = reportRepair(inputs: inputs, targetSum: remaining)
+        if inner == -1 { continue }
+        return lastNumber * inner
     }
 
     return -1

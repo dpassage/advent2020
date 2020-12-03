@@ -9,16 +9,22 @@
 import XCTest
 
 class Day01ReportRepairTests: XCTestCase {
+    let sample = [
+        1721,
+        979,
+        366,
+        299,
+        675,
+        1456
+    ].sorted()
+
     func testSampleInput() {
-        let sample = [
-            1721,
-            979,
-            366,
-            299,
-            675,
-            1456
-        ]
         let result = reportRepair(inputs: sample, targetSum: 2020)
         XCTAssertEqual(result, 514579)
+    }
+
+    func testPart2Sample() {
+        let result = repair3(inputs: sample, targetSum: 2020)
+        XCTAssertEqual(result, 241861950)
     }
 }
