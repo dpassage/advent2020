@@ -18,6 +18,25 @@ public func day05part1() {
     print(highest)
 }
 
+// 640 was correct answer!
+public func day05part2() {
+    let lines = readLines()
+    var seats: [Int] = []
+    for line in lines {
+        let id = seatID(line)
+        seats.append(id)
+    }
+    seats.sort()
+    var prevSeat = seats[0]
+    for i in 1..<seats.count {
+        if seats[i] != prevSeat + 1 {
+            print(seats[i] - 1)
+            break
+        }
+        prevSeat = seats[i]
+    }
+}
+
 func seatID(_ input: String) -> Int {
     var result = 0
     for char in input {
