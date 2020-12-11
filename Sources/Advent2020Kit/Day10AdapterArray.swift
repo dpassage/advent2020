@@ -41,7 +41,6 @@ func joltchain(inputs: [Int]) -> Int {
     return oneJumps * (threeJumps + 1)
 }
 
-
 func joltCombos(inputs: [Int]) -> Int {
     var chain = inputs.sorted()
     chain.append(chain.last! + 3)

@@ -22,6 +22,6 @@ let package = Package(
             dependencies: ["AdventLib"]),
         .testTarget(
             name: "Advent2020KitTests",
-            dependencies: ["Advent2020Kit"]),
+            dependencies: ["Advent2020Kit"])
     ]
 )

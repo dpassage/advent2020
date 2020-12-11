@@ -13,7 +13,7 @@ class Day02PasswordPhilosophyTests: XCTestCase {
         let testCases: [(String, Bool)] = [
             ("1-3 a: abcde", true),
             ("1-3 b: cdefg", false),
-            ("2-9 c: ccccccccc", true),
+            ("2-9 c: ccccccccc", true)
         ]
         for (testCase, expected) in testCases {
             let passwordLine = PasswordLine(testCase)!
@@ -25,7 +25,7 @@ class Day02PasswordPhilosophyTests: XCTestCase {
         let testCases: [(String, Bool)] = [
             ("1-3 a: abcde", true),
             ("1-3 b: cdefg", false),
-            ("2-9 c: ccccccccc", false),
+            ("2-9 c: ccccccccc", false)
         ]
         for (testCase, expected) in testCases {
             let passwordLine = PasswordLine(testCase)!
