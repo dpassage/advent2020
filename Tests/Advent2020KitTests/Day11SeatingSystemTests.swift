@@ -23,7 +23,10 @@ class SeatingSystemTests: XCTestCase {
         L.LLLLLL.L
         L.LLLLL.LL
         """
-        let result = fillSeats(input: input)
+        let result = fillSeats(input: input, iterate: iterate)
         XCTAssertEqual(result, 37)
+
+        let result2 = fillSeats(input: input, iterate: iterate2)
+        XCTAssertEqual(result2, 26)
     }
 }

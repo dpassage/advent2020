@@ -12,7 +12,15 @@ import AdventLib
 public func day11part1() {
     let lines = readLines()
     let input = lines.joined(separator: "\n")
-    let result = fillSeats(input: input)
+    let result = fillSeats(input: input, iterate: iterate(rect:))
+    print(result)
+}
+
+// 2190 was correct!
+public func day11part2() {
+    let lines = readLines()
+    let input = lines.joined(separator: "\n")
+    let result = fillSeats(input: input, iterate: iterate2(rect:))
     print(result)
 }
 
@@ -26,13 +34,13 @@ enum SeatCell: Character, Equatable {
     }
 }
 
-func fillSeats(input: String) -> Int {
+func fillSeats(input: String, iterate: (Rect<SeatCell>) -> Rect<SeatCell>) -> Int {
     guard var layout = Rect<SeatCell>(pattern: input) else {
         return -1
     }
 
     while true {
-        let nextLayout = iterate(rect: layout)
+        let nextLayout = iterate(layout)
         if layout == nextLayout {
             break
         } else {
@@ -59,6 +67,44 @@ func iterate(rect: Rect<SeatCell>) -> Rect<SeatCell> {
                 result[point] = .occupied
             }
             if thisSeat == .occupied && count >= 4 {
+                result[point] = .empty
+            }
+        }
+    }
+
+    return result
+}
+
+func iterate2(rect: Rect<SeatCell>) -> Rect<SeatCell> {
+    var result = rect
+
+    for row in 0..<rect.height {
+        for column in 0..<rect.width {
+            let point = Point(x: column, y: row)
+            let thisSeat = rect[point]
+            guard thisSeat != .floor else { continue }
+
+            let allAdjacents = point.allAdjacents().filter { rect.isValidIndex($0) }
+
+            var occupiedSeats = 0
+            nextAdj: for var adjacent in allAdjacents {
+                let delta = adjacent - point
+                while rect.isValidIndex(adjacent) {
+                    switch rect[adjacent] {
+                    case .empty: continue nextAdj
+                    case .occupied:
+                        occupiedSeats += 1
+                        continue nextAdj
+                    case .floor:
+                        break
+                    }
+                    adjacent = adjacent + delta
+                }
+            }
+            if thisSeat == .empty && occupiedSeats == 0 {
+                result[point] = .occupied
+            }
+            if thisSeat == .occupied && occupiedSeats >= 5 {
                 result[point] = .empty
             }
         }
