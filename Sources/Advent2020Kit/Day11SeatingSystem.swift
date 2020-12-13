@@ -98,7 +98,7 @@ func iterate2(rect: Rect<SeatCell>) -> Rect<SeatCell> {
                     case .floor:
                         break
                     }
-                    adjacent = adjacent + delta
+                    adjacent += delta
                 }
             }
             if thisSeat == .empty && occupiedSeats == 0 {

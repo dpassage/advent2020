@@ -17,8 +17,8 @@ class Day05BinaryBoardingTests: XCTestCase {
             ("BBFFBBFRLL", 820)
         ]
 
-        for (input, id) in testcases {
-            XCTAssertEqual(seatID(input), id)
+        for (input, identifier) in testcases {
+            XCTAssertEqual(seatID(input), identifier)
         }
     }
 }
