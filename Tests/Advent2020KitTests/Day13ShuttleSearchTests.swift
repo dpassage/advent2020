@@ -14,4 +14,10 @@ class ShuttleSearchTests: XCTestCase {
         let result = nextBus(timestamp: 939, busses: busses)
         XCTAssertEqual(result, 295)
     }
+
+    func testSyncSample1() {
+        let busses = "7,13,x,x,59,x,31,19"
+        let result = busSync(busses)
+        XCTAssertEqual(result, 1068781)
+    }
 }
