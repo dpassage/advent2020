@@ -12,7 +12,7 @@ class DockingDataTests: XCTestCase {
     func testParseMask() {
         let input = "mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
         let result = DockingDataCommand(input: input)
-        XCTAssertEqual(DockingDataCommand.mask([1: false, 6: true]), result)
+        XCTAssertEqual(DockingDataCommand.mask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"), result)
     }
 
     func testParseWrite() {
@@ -29,9 +29,24 @@ class DockingDataTests: XCTestCase {
         mem[8] = 0
         """
     func testSample() {
-        let computer = DockingDataComputer(input: sampleInput.components(separatedBy: "\n"))
+        var computer = DockingDataComputer()
+        computer.decoder(input: sampleInput.components(separatedBy: "\n"))
         let result = computer.sum()
         XCTAssertEqual(result, 165)
+    }
+
+    func testSample2() {
+        let input2 =
+            """
+            mask = 000000000000000000000000000000X1001X
+            mem[42] = 100
+            mask = 00000000000000000000000000000000X0XX
+            mem[26] = 1
+            """
+        var computer = DockingDataComputer()
+        computer.decoder2(input: input2.components(separatedBy: "\n"))
+        let result = computer.sum()
+        XCTAssertEqual(result, 208)
     }
 }
 
